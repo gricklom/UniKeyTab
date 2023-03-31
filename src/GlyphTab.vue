@@ -1,0 +1,58 @@
+<script setup>
+import { ref, computed } from 'vue'
+
+const filterChar = ref('')
+
+const glyphs = ref([
+    { baseChar: 'a', glyph: 'a', name: 'LATIN LETTER A'},
+    { baseChar: 'a', glyph: 'A', name: 'LATIN LETTER CAPITAL A'},
+    { baseChar: 'b', glyph: 'b', name: 'LATIN LETTER B'},
+    { baseChar: 'b', glyph: 'B', name: 'LATIN LETTER CAPITAL B'}
+])
+
+const filteredGrlyphs = computed(() => {
+    if (filterChar.value == '') {
+        return glyphs.value
+    } else {
+        return glyphs.value.filter((g) => g.baseChar === filterChar.value.toLowerCase())
+    }
+})
+</script>
+
+<template>
+    <scale-text-field id="filterField" 
+        v-model="filterChar"
+        label="Base char"
+        helper-text="Type a character to show only characters based on it."
+        max-length="1">
+    </scale-text-field>
+    <scale-table striped>
+        <table>
+            <caption>
+                Text elements based on {{ filterChar }}
+            </caption>
+            <thead>
+                <tr>
+                    <th aria-disabled="true">Text element</th>
+                    <th aria-disabled="true">Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="g in filteredGrlyphs">
+                    <td style="text-align: left;">
+                        <scale-button size="small">
+                            {{ g.glyph }}
+                        </scale-button>
+                    </td>
+                    <td style="text-align: left;">{{ g.name }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </scale-table>
+</template>
+
+<style>
+#filterField {
+    margin: 5em;
+}
+</style>
