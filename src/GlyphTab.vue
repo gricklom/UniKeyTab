@@ -1,6 +1,8 @@
 <script setup>
 import { ref, computed } from 'vue'
 
+const emit = defineEmits(['glyph'])
+
 const filterChar = ref('')
 
 const glyphs = ref([
@@ -17,6 +19,10 @@ const filteredGrlyphs = computed(() => {
         return glyphs.value.filter((g) => g.baseChar === filterChar.value.toLowerCase())
     }
 })
+
+function glyphClick(glyph) {
+    emit('glyph', glyph.glyph)
+}
 </script>
 
 <template>
@@ -39,12 +45,12 @@ const filteredGrlyphs = computed(() => {
             </thead>
             <tbody>
                 <tr v-for="g in filteredGrlyphs">
-                    <td style="text-align: left;">
-                        <scale-button size="small">
+                    <td>
+                        <button size="small" @click="glyphClick(g)">
                             {{ g.glyph }}
-                        </scale-button>
+                        </button>
                     </td>
-                    <td style="text-align: left;">{{ g.name }}</td>
+                    <td>{{ g.name }}</td>
                 </tr>
             </tbody>
         </table>
@@ -54,5 +60,8 @@ const filteredGrlyphs = computed(() => {
 <style>
 #filterField {
     margin: 5em;
+}
+td {
+    text-align: left;
 }
 </style>
