@@ -21,7 +21,6 @@ const filteredGrlyphs = computed(() => {
 })
 
 function glyphClick(glyph) {
-    console.log('glyph click: ' + glyph.glyph)
     emit('glyph', glyph.glyph)
 }
 </script>
