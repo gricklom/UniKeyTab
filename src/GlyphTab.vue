@@ -21,21 +21,22 @@ const filteredGrlyphs = computed(() => {
 })
 
 function glyphClick(glyph) {
+    console.log('glyph click: ' + glyph.glyph)
     emit('glyph', glyph.glyph)
 }
 </script>
 
 <template>
+    <p>Type a character to show only characters based on it.</p>
     <scale-text-field id="filterField" 
         v-model="filterChar"
         label="Base char"
-        helper-text="Type a character to show only characters based on it."
         max-length="1">
     </scale-text-field>
     <scale-table striped>
         <table>
-            <caption>
-                Text elements based on {{ filterChar }}
+            <caption v-if="filterChar">
+                Text elements based on character <strong>{{ filterChar }}</strong>.
             </caption>
             <thead>
                 <tr>
@@ -46,9 +47,9 @@ function glyphClick(glyph) {
             <tbody>
                 <tr v-for="g in filteredGrlyphs">
                     <td>
-                        <button size="small" @click="glyphClick(g)">
+                        <scale-button size="small" @click="() => glyphClick(g)">
                             {{ g.glyph }}
-                        </button>
+                        </scale-button>
                     </td>
                     <td>{{ g.name }}</td>
                 </tr>
