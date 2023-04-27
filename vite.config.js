@@ -9,5 +9,6 @@ export default defineConfig({
         isCustomElement: tag =>  tag.startsWith('scale-')
       }
     }
-  })]
+  })],
+  base: '/UniKeyTab/'
 })
